@@ -116,6 +116,21 @@ services:
    docker-compose up -d
 ```
 
+### Install on Kubernetes
+
+You can install Hammond on Kubernetes by using Helm. The
+[Helm chart for Hammond](https://github.com/djjudas21/charts/tree/main/charts/hammond)
+is maintained by djjudas21.
+
+Check out the default [`values.yaml`](https://github.com/djjudas21/charts/blob/main/charts/hammond/values.yaml)
+to see what you can override.
+
+```console
+helm repo add djjudas21 https://djjudas21.github.io/charts/
+helm repo update djjudas21
+helm install djjudas21/hammond
+```
+
 ### Build from Source / Ubuntu Installation
 
 Although personally I feel that using the docker container is the best way of using 
