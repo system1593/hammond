@@ -30,7 +30,7 @@
     "buefy": "^0.9.7",
     "chart.js": "^2.9.4",
     "core-js": "3.6.4",
-    "currency-formatter": "^1.5.7",
+    "currency-formatter": "^1.5.9",
     "date-fns": "2.10.0",
     "lodash": "^4.17.21",
     "node-gyp": "^9.3.1",
@@ -74,7 +74,7 @@
     "stylelint-config-recess-order": "^2.0.1",
     "stylelint-config-standard": "20.0.x",
     "stylelint-scss": "^3.14.1",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "2.6.11",
     "vuepress": "^1.9.8"
   },
   "resolutions": {
