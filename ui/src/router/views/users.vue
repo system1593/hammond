@@ -201,8 +201,8 @@ export default {
           {{ formatDate(props.row.createdAt) }}
         </b-table-column>
          <b-table-column v-slot="props">
-           <b-button type="is-success" v-if="props.row.isDisabled && props.row.roleDetail.key === 'USER'" @click="changeDisabledStatus(props.row.id, false)">{{ $t('enable') }}</b-button>
-           <b-button type="is-danger" v-if="!props.row.isDisabled && props.row.roleDetail.key === 'USER'" @click="changeDisabledStatus(props.row.id, true)">{{ $t('disable') }}</b-button>
+           <b-button v-if="props.row.isDisabled && props.row.roleDetail.key === 'USER'" type="is-success" @click="changeDisabledStatus(props.row.id, false)">{{ $t('enable') }}</b-button>
+           <b-button v-if="!props.row.isDisabled && props.row.roleDetail.key === 'USER'" type="is-danger" @click="changeDisabledStatus(props.row.id, true)">{{ $t('disable') }}</b-button>
          </b-table-column>
       </b-table>
     </div>
