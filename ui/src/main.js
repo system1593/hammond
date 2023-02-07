@@ -58,7 +58,7 @@ Vue.component('VueFontawesome', FontAwesomeIcon)
 
 Vue.use(Buefy, {
   defaultIconComponent: 'vue-fontawesome',
-  defaultIconPack: 'fa',
+  defaultIconPack: 'fas',
 })
 
 // Don't warn about using the dev version of Vue in development.
