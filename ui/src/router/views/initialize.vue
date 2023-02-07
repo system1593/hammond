@@ -187,7 +187,7 @@ export default {
         {{ connectionError }}
       </b-notification>
 
-      <b-field addons :label="this.$t('mysqlconnstr')">
+      <b-field addons :label="$t('mysqlconnstr')">
         <b-input v-model="url" required></b-input>
       </b-field>
 
@@ -200,20 +200,20 @@ export default {
     <div v-if="migrationMode === 'fresh'" class="box content">
       <h1 class="title">{{ $t('init.fresh.setupadminuser') }}</h1>
       <form @submit.prevent="register">
-        <b-field :label="this.$t('init.fresh.yourname')">
+        <b-field :label="$t('init.fresh.yourname')">
           <b-input v-model="registerModel.name" required></b-input>
         </b-field>
-        <b-field :label="this.$t('init.fresh.youremail')">
+        <b-field :label="$t('init.fresh.youremail')">
           <b-input v-model="registerModel.email" type="email" required></b-input>
         </b-field>
-        <b-field :label="this.$t('init.fresh.yourpassword')">
+        <b-field :label="$t('init.fresh.yourpassword')">
           <b-input v-model="registerModel.password" type="password" required minlength="8" password-reveal></b-input>
         </b-field>
-        <b-field :label="this.$t('currency')">
+        <b-field :label="$t('currency')">
           <b-autocomplete
             v-model="registerModel.currency"
             :custom-formatter="formatCurrency"
-            :placeholder="this.$t('currency')"
+            :placeholder="$t('currency')"
             :data="filteredCurrencyMasters"
             :keep-first="true"
             :open-on-focus="true"
@@ -221,8 +221,8 @@ export default {
             @select="(option) => (selected = option)"
           ></b-autocomplete>
         </b-field>
-        <b-field :label="this.$t('distanceunit')">
-          <b-select v-model.number="registerModel.distanceUnit" :placeholder="this.$t('distanceunit')" required expanded>
+        <b-field :label="$t('distanceunit')">
+          <b-select v-model.number="registerModel.distanceUnit" :placeholder="$t('distanceunit')" required expanded>
             <option v-for="(option, key) in distanceUnitMasters" :key="key" :value="key">
               {{ `${$t('unit.long.' + option.key)} (${$t('unit.short.' + option.key)})` }}
             </option>
@@ -230,7 +230,7 @@ export default {
         </b-field>
         <br />
         <div class="buttons">
-          <b-button type="is-primary" native-type="submit" tag="input" :value="this.$t('save')"></b-button>
+          <b-button type="is-primary" native-type="submit" tag="button" :value="$t('save')"></b-button>
 
           <b-button type="is-danger is-light" @click="resetMigrationMode">{{ $t('cancel') }}</b-button>
         </div>

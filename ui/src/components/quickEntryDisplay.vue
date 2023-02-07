@@ -50,7 +50,7 @@ export default {
       <b-select
         v-if="unprocessedQuickEntries.length"
         v-model="quickEntry"
-        :placeholder="this.$t('referquickentry')"
+        :placeholder="$t('referquickentry')"
         expanded
         @input="showQuickEntry($event)"
       >

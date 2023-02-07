@@ -95,11 +95,10 @@ export default {
             </div>
             <div class="column">
               <b-button
-                tag="input"
+                tag="button"
                 native-type="submit"
                 :disabled="tryingToCreate"
                 type="is-primary"
-                :value="this.$t('uploadfile')"
                 class="control"
               >
                 {{ $t('uploadfile') }}

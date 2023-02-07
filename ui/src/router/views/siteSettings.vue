@@ -72,15 +72,15 @@ export default {
     </div>
     <br />
     <form class="" @submit.prevent="saveSettings">
-      <b-field :label="this.$t('currency')">
-        <b-select v-model="settingsModel.currency" :placeholder="this.$t('currency')" required expanded>
+      <b-field :label="$t('currency')">
+        <b-select v-model="settingsModel.currency" :placeholder="$t('currency')" required expanded>
           <option v-for="option in currencyMasters" :key="option.code" :value="option.code">
             {{ `${option.namePlural} (${option.code})` }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('distanceunit')">
-        <b-select v-model.number="settingsModel.distanceUnit" :placeholder="this.$t('distanceunit')" required expanded>
+      <b-field :label="$t('distanceunit')">
+        <b-select v-model.number="settingsModel.distanceUnit" :placeholder="$t('distanceunit')" required expanded>
           <option v-for="(option, key) in distanceUnitMasters" :key="key" :value="key">
             {{ `${$t('unit.long.' + option.key)} (${$t('unit.short.' + option.key)})` }}
           </option>
@@ -88,7 +88,7 @@ export default {
       </b-field>
       <br />
       <b-field>
-        <b-button tag="input" native-type="submit" :disabled="tryingToSave" type="is-primary" :value="this.$t('save')" expanded> </b-button>
+        <b-button tag="button" native-type="submit" :disabled="tryingToSave" type="is-primary" expanded> {{ $t('save') }}</b-button>
       </b-field>
     </form>
   </Layout>

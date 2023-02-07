@@ -71,7 +71,7 @@ export default {
       <b-field :label="$t('password')">
         <b-input v-model="password" tag="b-input" name="password" type="password" :placeholder="placeholders.password" />
       </b-field>
-      <b-button tag="input" native-type="submit" :value="$t('login')" :disabled="tryingToLogIn" type="is-primary">
+      <b-button tag="button" native-type="submit" :disabled="tryingToLogIn" type="is-primary">
         <BaseIcon v-if="tryingToLogIn" name="sync" spin />
         <span v-else>
           {{ $t('login') }}

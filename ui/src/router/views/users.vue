@@ -181,7 +181,7 @@ export default {
           </b-field>
           <br />
           <div class="buttons">
-            <b-button type="is-primary" native-type="submit" tag="input" :value="$t('save')"></b-button>
+            <b-button type="is-primary" native-type="submit" tag="button">{{ $t('save') }}</b-button>
 
             <b-button type="is-danger is-light" @click="resetUserForm">{{ $t('cancel') }}</b-button>
           </div>

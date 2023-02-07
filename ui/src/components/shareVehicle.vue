@@ -92,7 +92,7 @@ export default {
   <div class="box" style="max-width:600px">
     <h1 class="subtitle">{{ $t('share') }} {{ vehicle.nickname }}</h1>
     <section>
-      <div class="columns is-mobile" v-for="model in models" :key="model.id">
+      <div v-for="model in models" :key="model.id" class="columns is-mobile">
         <div class="column is-one-third">
           <b-field>
             <b-switch v-model="model.isShared" :disabled="model.isOwner" @input="changeShareStatus(model)">

@@ -193,21 +193,21 @@ export default {
       </div>
     </div>
     <form class="" @submit.prevent="createFillup">
-      <b-field :label="this.$t('selectvehicle')">
-        <b-select v-model="selectedVehicle" :placeholder="this.$t('vehicle')" required expanded :disabled="fillup.id">
+      <b-field :label="$t('selectvehicle')">
+        <b-select v-model="selectedVehicle" :placeholder="$t('vehicle')" required expanded :disabled="fillup.id">
           <option v-for="option in myVehicles" :key="option.id" :value="option">
             {{ option.nickname }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('expenseby')">
-        <b-select v-model="fillupModel.userId" :placeholder="this.$t('user')" required expanded :disabled="fillup.id">
+      <b-field :label="$t('expenseby')">
+        <b-select v-model="fillupModel.userId" :placeholder="$t('user')" required expanded :disabled="fillup.id">
           <option v-for="option in users" :key="option.userId" :value="option.userId">
             {{ option.name }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('fillupdate')">
+      <b-field :label="$t('fillupdate')">
         <b-datepicker
           v-model="fillupModel.date"
           :date-formatter="formatDate"
@@ -218,7 +218,7 @@ export default {
         >
         </b-datepicker>
       </b-field>
-      <b-field :label="this.$t('fuelsubtype')">
+      <b-field :label="$t('fuelsubtype')">
         <b-autocomplete
           v-model="fillupModel.fuelSubType"
           :data="filteredFuelSubtypes"
@@ -229,27 +229,27 @@ export default {
         >
         </b-autocomplete>
       </b-field>
-      <b-field :label="this.$t('quantity') + `*`" addons>
+      <b-field :label="$t('quantity') + `*`" addons>
         <b-input v-model.number="fillupModel.fuelQuantity" type="number" step=".001" min="0" expanded required></b-input>
-        <b-select v-model="fillupModel.fuelUnit" :placeholder="this.$t('fuelunit')" required>
+        <b-select v-model="fillupModel.fuelUnit" :placeholder="$t('fuelunit')" required>
           <option v-for="(option, key) in fuelUnitMasters" :key="key" :value="key">
             {{ $t('unit.long.' + option.key) }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('per', { '0': this.$t('price'), '1': $t('unit.short.' + vehicle.fuelUnitDetail.key) })"
+      <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + vehicle.fuelUnitDetail.key) })"
         ><p class="control">
           <span class="button is-static">{{ me.currency }}</span>
         </p>
         <b-input v-model.number="fillupModel.perUnitPrice" type="number" min="0" step=".001" expanded required></b-input>
       </b-field>
-      <b-field :label="this.$t('totalamountpaid')">
+      <b-field :label="$t('totalamountpaid')">
         <p class="control">
           <span class="button is-static">{{ me.currency }}</span>
         </p>
         <b-input v-model.number="fillupModel.totalAmount" type="number" min="0" step=".001" expanded required></b-input>
       </b-field>
-      <b-field :label="this.$t('odometer')">
+      <b-field :label="$t('odometer')">
         <p class="control">
           <span class="button is-static">{{ $t('unit.short.' + me.distanceUnitDetail.key) }}</span>
         </p>
@@ -265,10 +265,10 @@ export default {
         <b-switch v-model="showMore">{{ $t('fillmoredetails') }}</b-switch>
       </b-field>
       <fieldset v-if="showMore">
-        <b-field :label="this.$t('fillingstation')">
+        <b-field :label="$t('fillingstation')">
           <b-input v-model="fillupModel.fillingStation" type="text" expanded></b-input>
         </b-field>
-        <b-field :label="this.$t('comments')">
+        <b-field :label="$t('comments')">
           <b-input v-model="fillupModel.comments" type="textarea" expanded></b-input>
         </b-field>
       </fieldset>
@@ -277,7 +277,7 @@ export default {
       </b-field>
       <br />
       <b-field>
-        <b-button tag="input" native-type="submit" :disabled="tryingToCreate" type="is-primary" :value="this.$t('save')" :label="this.$t('createfillup')" expanded> </b-button>
+        <b-button tag="button" native-type="submit" :disabled="tryingToCreate" type="is-primary" :value="$t('save')" :label="$t('createfillup')" expanded/> 
         <p v-if="authError">
           There was an error logging in to your account.
         </p>
