@@ -92,7 +92,10 @@ export default {
           },
           {
             label: this.$t('avgfuelcost'),
-            value: this.$t('per', {'0': this.formatCurrency(x.avgFuelPrice, x.currency), '1': this.$t('unit.short.' + this.vehicle.fuelUnitDetail.key)}),
+            value: this.$t('per', {
+              0: this.formatCurrency(x.avgFuelPrice, x.currency),
+              1: this.$t('unit.short.' + this.vehicle.fuelUnitDetail.key),
+            }),
           },
         ]
       })
@@ -309,15 +312,15 @@ export default {
       <div class="column is-one-half" :class="isMobile ? 'has-text-centered' : ''">
         <p class="title">{{ vehicle.nickname }} - {{ vehicle.registration }}</p>
         <p class="subtitle">
-          {{ [vehicle.make, vehicle.model, this.$t('fuel.' + vehicle.fuelTypeDetail.key)].join(' | ') }}
+          {{ [vehicle.make, vehicle.model, $t('fuel.' + vehicle.fuelTypeDetail.key)].join(' | ') }}
 
           <template v-if="users.length > 1">
-            | {{ $t("sharedwith") }} :
+            | {{ $t('sharedwith') }} :
             {{
               users
                 .map((x) => {
                   if (x.userId === me.id) {
-                    return this.$t('you')
+                    return $t('you')
                   } else {
                     return x.name
                   }
@@ -328,8 +331,8 @@ export default {
         </p>
       </div>
       <div :class="(!isMobile ? 'has-text-right ' : '') + 'column is-one-half buttons'">
-        <b-button type="is-primary" tag="router-link" :to="`/vehicles/${vehicle.id}/fillup`">{{ this.$t('addfillup') }}</b-button>
-        <b-button type="is-primary" tag="router-link" :to="`/vehicles/${vehicle.id}/expense`">{{ this.$t('addexpense') }}</b-button>
+        <b-button type="is-primary" tag="router-link" :to="`/vehicles/${vehicle.id}/fillup`">{{ $t('addfillup') }}</b-button>
+        <b-button type="is-primary" tag="router-link" :to="`/vehicles/${vehicle.id}/expense`">{{ $t('addexpense') }}</b-button>
         <b-button
           v-if="vehicle.isOwner"
           tag="router-link"
@@ -339,9 +342,8 @@ export default {
             props: { vehicle: vehicle },
             params: { id: vehicle.id },
           }"
-        >
-          <b-icon pack="fas" icon="edit" type="is-info"> </b-icon
-        ></b-button>
+        ><b-icon pack="fas" icon="edit" type="is-info"> </b-icon>
+      </b-button>
         <b-button v-if="vehicle.isOwner" :title="$t('sharevehicle')" @click="showShareVehicleModal">
           <b-icon pack="fas" icon="user-friends" type="is-info"> </b-icon
         ></b-button>
@@ -362,42 +364,42 @@ export default {
       <h1 class="title is-4">{{ $t('pastfillups') }}</h1>
 
       <b-table :data="fillups" hoverable mobile-cards :detailed="isMobile" detail-key="id" paginated per-page="10">
-        <b-table-column v-slot="props" field="date" :label="this.$t('date')" :td-attrs="columnTdAttrs" sortable date>
+        <b-table-column v-slot="props" field="date" :label="$t('date')" :td-attrs="columnTdAttrs" sortable date>
           {{ formatDate(props.row.date) }}
         </b-table-column>
-        <b-table-column v-slot="props" field="fuelSubType" :label="this.$t('fuelsubtype')" :td-attrs="columnTdAttrs">
+        <b-table-column v-slot="props" field="fuelSubType" :label="$t('fuelsubtype')" :td-attrs="columnTdAttrs">
           {{ props.row.fuelSubType }}
         </b-table-column>
-        <b-table-column v-slot="props" field="fuelQuantity" :label="this.$t('quantity')" :td-attrs="hiddenMobile" numeric>
+        <b-table-column v-slot="props" field="fuelQuantity" :label="$t('quantity')" :td-attrs="hiddenMobile" numeric>
           {{ `${props.row.fuelQuantity} ${$t('unit.short.' + props.row.fuelUnitDetail.key)}` }}
         </b-table-column>
         <b-table-column
           v-slot="props"
           field="perUnitPrice"
-          :label="this.$t('per', { '0': this.$t('price'), '1': this.$t('unit.short.' + vehicle.fuelUnitDetail.key) })"
+          :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + vehicle.fuelUnitDetail.key) })"
           :td-attrs="hiddenMobile"
           numeric
           sortable
         >
           {{ `${formatCurrency(props.row.perUnitPrice, props.row.currency)}` }}
         </b-table-column>
-        <b-table-column v-if="isMobile" v-slot="props" field="totalAmount" :label="this.$t('total')" :td-attrs="hiddenDesktop" sortable numeric>
+        <b-table-column v-if="isMobile" v-slot="props" field="totalAmount" :label="$t('total')" :td-attrs="hiddenDesktop" sortable numeric>
           {{ `${me.currency} ${props.row.totalAmount}` }} ({{ `${props.row.fuelQuantity} ${$t('unit.short.' + props.row.fuelUnitDetail.key)}` }} @
           {{ `${me.currency} ${props.row.perUnitPrice}` }})
         </b-table-column>
-        <b-table-column v-if="!isMobile" v-slot="props" field="totalAmount" :label="this.$t('total')" :td-attrs="hiddenMobile" sortable numeric>
+        <b-table-column v-if="!isMobile" v-slot="props" field="totalAmount" :label="$t('total')" :td-attrs="hiddenMobile" sortable numeric>
           {{ `${formatCurrency(props.row.totalAmount, props.row.currency)}` }}
         </b-table-column>
-        <b-table-column v-slot="props" width="20" field="isTankFull" :label="this.$t('fulltank')" :td-attrs="hiddenMobile">
+        <b-table-column v-slot="props" width="20" field="isTankFull" :label="$t('fulltank')" :td-attrs="hiddenMobile">
           <b-icon pack="fas" :icon="props.row.isTankFull ? 'check' : 'times'" type="is-info"> </b-icon>
         </b-table-column>
-        <b-table-column v-slot="props" field="odoReading" :label="this.$t('odometer')" :td-attrs="hiddenMobile" numeric>
+        <b-table-column v-slot="props" field="odoReading" :label="$t('odometer')" :td-attrs="hiddenMobile" numeric>
           {{ `${props.row.odoReading} ${$t('unit.short.' + me.distanceUnitDetail.key)}` }}
         </b-table-column>
-        <b-table-column v-slot="props" field="fillingStation" :label="this.$t('gasstation')" :td-attrs="hiddenMobile">
+        <b-table-column v-slot="props" field="fillingStation" :label="$t('gasstation')" :td-attrs="hiddenMobile">
           {{ `${props.row.fillingStation}` }}
         </b-table-column>
-        <b-table-column v-slot="props" field="userId" :label="this.$t('by')" :td-attrs="hiddenMobile">
+        <b-table-column v-slot="props" field="userId" :label="$t('by')" :td-attrs="hiddenMobile">
           {{ `${props.row.user.name}` }}
         </b-table-column>
         <b-table-column v-slot="props">
@@ -412,7 +414,10 @@ export default {
           >
             <b-icon pack="fas" icon="edit" type="is-info"> </b-icon
           ></b-button>
-          <b-button type="is-ghost" :title="$t('deletefillup')" @click="deleteFillup(props.row.id)">
+          <b-button 
+            type="is-ghost"
+            :title="$t('deletefillup')"
+             @click="deleteFillup(props.row.id)">
             <b-icon pack="fas" icon="trash" type="is-danger"> </b-icon
           ></b-button>
         </b-table-column>
@@ -427,22 +432,22 @@ export default {
       <h1 class="title is-4">{{ $t('expenses') }}</h1>
 
       <b-table :data="expenses" hoverable mobile-cards paginated per-page="10">
-        <b-table-column v-slot="props" field="date" :label="this.$t('date')" :td-attrs="columnTdAttrs" date>
+        <b-table-column v-slot="props" field="date" :label="$t('date')" :td-attrs="columnTdAttrs" date>
           {{ formatDate(props.row.date) }}
         </b-table-column>
-        <b-table-column v-slot="props" field="expenseType" :label="this.$t('expensetype')">
+        <b-table-column v-slot="props" field="expenseType" :label="$t('expensetype')">
           {{ `${props.row.expenseType}` }}
         </b-table-column>
 
-        <b-table-column v-slot="props" field="amount" :label="this.$t('total')" :td-attrs="hiddenMobile" sortable numeric>
+        <b-table-column v-slot="props" field="amount" :label="$t('total')" :td-attrs="hiddenMobile" sortable numeric>
           {{ `${formatCurrency(props.row.amount, props.row.currency)}` }}
         </b-table-column>
 
-        <b-table-column v-slot="props" field="odoReading" :label="this.$t('odometer')" :td-attrs="columnTdAttrs" numeric>
+        <b-table-column v-slot="props" field="odoReading" :label="$t('odometer')" :td-attrs="columnTdAttrs" numeric>
           {{ `${props.row.odoReading} ${$t('unit.short.' + me.distanceUnitDetail.key)}` }}
         </b-table-column>
 
-        <b-table-column v-slot="props" field="userId" :label="this.$t('by')" :td-attrs="columnTdAttrs">
+        <b-table-column v-slot="props" field="userId" :label="$t('by')" :td-attrs="columnTdAttrs">
           {{ `${props.row.user.name}` }}
         </b-table-column>
         <b-table-column v-slot="props">
@@ -467,7 +472,9 @@ export default {
     <br />
     <div class="box">
       <div class="columns">
-        <div class="column is-three-quarters"> <h1 class="title is-4">{{ $t('attachments') }}</h1></div>
+        <div class="column is-three-quarters">
+          <h1 class="title is-4">{{ $t('attachments') }}</h1></div
+        >
         <div class="column buttons">
           <b-button type="is-primary" @click="showAttachmentForm = true">
             {{ $t('addattachment') }}
@@ -492,18 +499,18 @@ export default {
                   </b-upload>
                 </b-field>
                 <b-field>
-                  <b-input v-model="title" required :placeholder="this.$t('labelforfile')"></b-input>
+                  <b-input v-model="title" required :placeholder="$t('labelforfile')"></b-input>
                 </b-field>
 
                 <b-field class="buttons">
-                  <b-button tag="input" native-type="submit" :disabled="tryingToUpload" type="is-primary" label="Upload File" value="Upload File">
+                  <b-button tag="button" native-type="submit" :disabled="tryingToUpload" type="is-primary" label="Upload File" value="Upload File">
                   </b-button>
                   <b-button
-                    tag="input"
+                    tag="button"
                     native-type="submit"
                     :disabled="tryingToUpload"
                     type="is-danger"
-                    label="Upload File"
+                    label="Cancel"
                     value="Cancel"
                     @click="showAttachmentForm = false"
                   >
@@ -516,14 +523,14 @@ export default {
       </div>
 
       <b-table :data="attachments" hoverable mobile-cards>
-        <b-table-column v-slot="props" field="title" :label="this.$t('title')" :td-attrs="columnTdAttrs">
+        <b-table-column v-slot="props" field="title" :label="$t('title')" :td-attrs="columnTdAttrs">
           {{ `${props.row.title}` }}
         </b-table-column>
 
-        <b-table-column v-slot="props" field="originalName" :label="this.$t('name')" :td-attrs="columnTdAttrs">
+        <b-table-column v-slot="props" field="originalName" :label="$t('name')" :td-attrs="columnTdAttrs">
           {{ `${props.row.originalName}` }}
         </b-table-column>
-        <b-table-column v-slot="props" field="id" :label="this.$t('download')" :td-attrs="columnTdAttrs">
+        <b-table-column v-slot="props" field="id" :label="$t('download')" :td-attrs="columnTdAttrs">
           <b-button tag="a" :href="`/api/attachments/${props.row.id}/file?access_token=${currentUser.token}`" :download="props.row.originalName">
             <b-icon type="is-primary" icon="download"></b-icon>
           </b-button>
@@ -533,7 +540,9 @@ export default {
     </div>
     <div class="box">
       <div class="columns">
-        <div class="column" :class="isMobile ? 'has-text-centered' : ''"> <h1 class="title">{{ $t('statistics') }}</h1></div>
+        <div class="column" :class="isMobile ? 'has-text-centered' : ''">
+          <h1 class="title">{{ $t('statistics') }}</h1></div
+        >
         <div class="column">
           <div class="columns is-pulled-right is-medium">
             <div class="column">

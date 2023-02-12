@@ -9,6 +9,19 @@ export default {
     meta: [{ name: 'description', content: 'The Import Fuelly page.' }],
   },
   components: { Layout },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+  data: function() {
+    return {
+      file: null,
+      tryingToCreate: false,
+      errors: [],
+    }
+  },
   computed: {
     ...mapState('utils', ['isMobile']),
     uploadButtonLabel() {
@@ -26,19 +39,6 @@ export default {
         }
       }
     },
-  },
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-  data: function() {
-    return {
-      file: null,
-      tryingToCreate: false,
-      errors: [],
-    }
   },
   methods: {
     importFuelly() {
@@ -121,7 +121,7 @@ export default {
                 </b-field>
               </div>
               <div class="column">
-                <b-button tag="input" native-type="submit" :disabled="tryingToCreate" type="is-primary" :value="this.$t('uploadfile')" class="control">
+                <b-button tag="button" native-type="submit" :disabled="tryingToCreate" type="is-primary" class="control">
                   {{ $t('import') }}
                 </b-button>
               </div></div

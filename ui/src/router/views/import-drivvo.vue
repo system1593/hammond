@@ -154,7 +154,7 @@ export default {
                 </b-field>
               </div>
               <div class="column">
-                <b-button tag="input" native-type="submit" :disabled="tryingToCreate" type="is-primary" value="Upload File" class="control">
+                <b-button tag="button" native-type="submit" :disabled="tryingToCreate" type="is-primary" class="control">
                   Import
                 </b-button>
               </div></div

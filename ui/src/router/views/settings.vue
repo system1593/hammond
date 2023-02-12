@@ -167,7 +167,7 @@ export default {
           </b-field>
           <br />
           <b-field>
-            <b-button tag="input" native-type="submit" :disabled="tryingToSave" type="is-primary" :value="$t('save')" expanded> </b-button>
+            <b-button tag="button" native-type="submit" :disabled="tryingToSave" type="is-primary" expanded> {{ $t('save') }} </b-button>
           </b-field>
         </form>
       </div>
@@ -185,7 +185,8 @@ export default {
           </b-field>
           <p v-if="!passwordValid" class="help is-danger">{{ $t('passworddontmatch') }}</p>
           <b-field>
-            <b-button tag="input" native-type="submit" :disabled="!passwordValid" type="is-primary" :value="$t('changepassword')" expanded>
+            <b-button tag="button" native-type="submit" :disabled="!passwordValid" type="is-primary" expanded>
+              {{ $t('changepassword') }}
             </b-button>
           </b-field>
         </form>

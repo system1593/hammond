@@ -134,53 +134,53 @@ export default {
       </div>
     </div>
     <form @submit.prevent="createVehicle">
-      <b-field :label="this.$t('nickname') + `*`">
+      <b-field :label="$t('nickname') + `*`">
         <b-input v-model="vehicleModel.nickname" type="text" expanded required></b-input>
       </b-field>
-      <b-field :label="this.$t('registration') + `*`">
+      <b-field :label="$t('registration') + `*`">
         <b-input v-model="vehicleModel.registration" type="text" expanded required></b-input>
       </b-field>
       <b-field label="VIN">
         <b-input v-model="vehicleModel.vin" type="text" expanded></b-input>
       </b-field>
-      <b-field :label="this.$t('fueltype') + `*`">
-        <b-select v-model.number="vehicleModel.fuelType" :placeholder="this.$t('fueltype')" required expanded>
+      <b-field :label="$t('fueltype') + `*`">
+        <b-select v-model.number="vehicleModel.fuelType" :placeholder="$t('fueltype')" required expanded>
           <option v-for="(option, key) in fuelTypeMasters" :key="key" :value="key">
             {{ $t('fuel.' + option.key) }}
           </option>
         </b-select>
       </b-field>
 
-      <b-field :label="this.$t('fuelunit') + `*`">
-        <b-select v-model.number="vehicleModel.fuelUnit" :placeholder="this.$t('fuelunit')" required expanded>
+      <b-field :label="$t('fuelunit') + `*`">
+        <b-select v-model.number="vehicleModel.fuelUnit" :placeholder="$t('fuelunit')" required expanded>
           <option v-for="(option, key) in fuelUnitMasters" :key="key" :value="key">
             {{ $t('unit.long.' + option.key) }}
           </option>
         </b-select>
       </b-field>
 
-      <b-field :label="this.$t('make') + `*`">
+      <b-field :label="$t('make') + `*`">
         <b-input v-model="vehicleModel.make" type="text" required expanded></b-input>
       </b-field>
-      <b-field :label="this.$t('model') + `*`">
+      <b-field :label="$t('model') + `*`">
         <b-input v-model="vehicleModel.model" type="text" required expanded></b-input>
       </b-field>
-      <b-field :label="this.$t('yearmanufacture') + `*`">
+      <b-field :label="$t('yearmanufacture') + `*`">
         <b-input v-model.number="vehicleModel.yearOfManufacture" type="number" expanded number></b-input>
       </b-field>
-      <b-field :label="this.$t('enginesize')">
+      <b-field :label="$t('enginesize')">
         <b-input v-model.number="vehicleModel.engineSize" type="number" expanded number></b-input>
       </b-field>
 
       <br />
       <b-field>
         <b-button
-          tag="input"
+          tag="button"
           native-type="submit"
           :disabled="tryingToCreate"
           type="is-primary"
-          :value="this.$t('save')"
-          :label="this.$t('createvehicle')"
+          :value="$t('save')"
+          :label="$t('createvehicle')"
           expanded
         >
           <BaseIcon v-if="tryingToCreate" name="sync" spin />

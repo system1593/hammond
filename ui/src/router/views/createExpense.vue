@@ -162,41 +162,41 @@ export default {
       </div>
     </div>
     <form @submit.prevent="createExpense">
-      <b-field :label="this.$t('selectvehicle')">
-        <b-select v-model="selectedVehicle" :placeholder="this.$t('vehicle')" required expanded :disabled="expense.id">
+      <b-field :label="$t('selectvehicle')">
+        <b-select v-model="selectedVehicle" :placeholder="$t('vehicle')" required expanded :disabled="expense.id">
           <option v-for="option in myVehicles" :key="option.id" :value="option">
             {{ option.nickname }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('expenseby')">
-        <b-select v-model="expenseModel.userId" :placeholder="this.$t('user')" required expanded :disabled="expense.id">
+      <b-field :label="$t('expenseby')">
+        <b-select v-model="expenseModel.userId" :placeholder="$t('user')" required expanded :disabled="expense.id">
           <option v-for="option in users" :key="option.userId" :value="option.userId">
             {{ option.name }}
           </option>
         </b-select>
       </b-field>
-      <b-field :label="this.$t('expensedate')">
+      <b-field :label="$t('expensedate')">
         <b-datepicker
           v-model="expenseModel.date"
           :date-formatter="formatDate"
-          :placeholder="this.$t('clicktoselect')"
+          :placeholder="$t('clicktoselect')"
           icon="calendar"
           :max-date="new Date()"
         >
         </b-datepicker>
       </b-field>
-      <b-field :label="this.$t('expensetype') + `*`">
+      <b-field :label="$t('expensetype') + `*`">
         <b-input v-model="expenseModel.expenseType" expanded required></b-input>
       </b-field>
 
-      <b-field :label="this.$t('totalamountpaid')">
+      <b-field :label="$t('totalamountpaid')">
         <p class="control">
           <span class="button is-static">{{ me.currency }}</span>
         </p>
         <b-input v-model.number="expenseModel.amount" type="number" min="0" expanded step=".001" required></b-input>
       </b-field>
-      <b-field :label="this.$t('odometer')">
+      <b-field :label="$t('odometer')">
         <p class="control">
           <span class="button is-static">{{ $t('unit.short.' + me.distanceUnitDetail.key) }}</span>
         </p>
@@ -207,7 +207,7 @@ export default {
         <b-switch v-model="showMore">{{ $t('fillmoredetails') }}</b-switch>
       </b-field>
       <fieldset v-if="showMore">
-        <b-field :label="this.$t('details')">
+        <b-field :label="$t('details')">
           <b-input v-model="expenseModel.comments" type="textarea" expanded></b-input>
         </b-field>
       </fieldset>
@@ -216,7 +216,7 @@ export default {
       </b-field>
       <br />
       <b-field>
-        <b-button tag="input" native-type="submit" :value="this.$t('save')" :disabled="tryingToCreate" type="is-primary" label="Create Expense" expanded> </b-button>
+        <b-button tag="button" native-type="submit" :value="$t('save')" :disabled="tryingToCreate" type="is-primary" label="Create Expense" expanded/> 
       </b-field>
     </form>
   </Layout>

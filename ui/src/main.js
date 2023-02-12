@@ -34,7 +34,6 @@ import '@components/_globals'
 import 'buefy/dist/buefy.css'
 import 'nprogress/nprogress.css'
 
-Vue.component('vue-fontawesome', FontAwesomeIcon)
 library.add(
   faCheck,
   faTimes,
@@ -54,7 +53,8 @@ library.add(
   faShare,
   faUserFriends,
   faTimesCircle
-)
+);
+Vue.component('VueFontawesome', FontAwesomeIcon)
 
 Vue.use(Buefy, {
   defaultIconComponent: 'vue-fontawesome',
