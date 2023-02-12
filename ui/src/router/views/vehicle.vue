@@ -342,7 +342,7 @@ export default {
             props: { vehicle: vehicle },
             params: { id: vehicle.id },
           }"
-        ><b-icon size="is-small" pack="fas" icon="edit" type="is-info"> </b-icon>
+        ><b-icon pack="fas" icon="edit" type="is-info"> </b-icon>
       </b-button>
         <b-button v-if="vehicle.isOwner" :title="$t('sharevehicle')" @click="showShareVehicleModal">
           <b-icon pack="fas" icon="user-friends" type="is-info"> </b-icon
@@ -404,7 +404,6 @@ export default {
         </b-table-column>
         <b-table-column v-slot="props">
           <b-button
-            size="is-small"
             type="is-ghost"
             tag="router-link"
             :to="{
@@ -416,7 +415,6 @@ export default {
             <b-icon pack="fas" icon="edit" type="is-info"> </b-icon
           ></b-button>
           <b-button 
-            size="is-small" 
             type="is-ghost"
             :title="$t('deletefillup')"
              @click="deleteFillup(props.row.id)">
@@ -454,7 +452,6 @@ export default {
         </b-table-column>
         <b-table-column v-slot="props">
           <b-button
-            size="is-small"
             type="is-ghost"
             tag="router-link"
             :to="{
@@ -465,7 +462,7 @@ export default {
           >
             <b-icon pack="fas" icon="edit" type="is-info"> </b-icon
           ></b-button>
-          <b-button size="is-small" type="is-ghost" :title="$t('deleteexpense')" @click="deleteExpense(props.row.id)">
+          <b-button type="is-ghost" :title="$t('deleteexpense')" @click="deleteExpense(props.row.id)">
             <b-icon pack="fas" icon="trash" type="is-danger"> </b-icon
           ></b-button>
         </b-table-column>
