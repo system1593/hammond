@@ -3,7 +3,7 @@ package service
 import (
 	"bytes"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
 )
 
 func WriteToDB(fillups []db.Fillup, expenses []db.Expense) []string {

@@ -3,8 +3,9 @@ package service
 import (
 	"fmt"
 
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/models"
+	"hammond/db"
+	"hammond/models"
+
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

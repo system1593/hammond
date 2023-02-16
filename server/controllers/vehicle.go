@@ -4,9 +4,10 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/akhilrex/hammond/common"
-	"github.com/akhilrex/hammond/models"
-	"github.com/akhilrex/hammond/service"
+	"hammond/common"
+	"hammond/models"
+	"hammond/service"
+
 	"github.com/gin-gonic/gin"
 )
 

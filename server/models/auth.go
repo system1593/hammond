@@ -1,6 +1,6 @@
 package models
 
-import "github.com/akhilrex/hammond/db"
+import "hammond/db"
 
 type LoginResponse struct {
 	Name         string `json:"name"`

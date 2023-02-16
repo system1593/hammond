@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/models"
+	"hammond/db"
+	"hammond/models"
 )
 
 func CreateAlert(model models.CreateAlertModel, vehicleId, userId string) (*db.VehicleAlert, error) {

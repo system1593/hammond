@@ -5,9 +5,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/akhilrex/hammond/controllers"
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/service"
+	"hammond/controllers"
+	"hammond/db"
+	"hammond/service"
+
 	"github.com/gin-contrib/location"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"

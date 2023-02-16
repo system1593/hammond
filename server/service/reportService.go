@@ -4,9 +4,9 @@ import (
 	"sort"
 	"time"
 
-	"github.com/akhilrex/hammond/common"
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/models"
+	"hammond/common"
+	"hammond/db"
+	"hammond/models"
 )
 
 func GetMileageByVehicleId(vehicleId string, since time.Time, mileageOption string) (mileage []models.MileageModel, err error) {

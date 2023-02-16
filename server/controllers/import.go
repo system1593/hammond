@@ -4,7 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/akhilrex/hammond/service"
+	"hammond/service"
+
 	"github.com/gin-gonic/gin"
 )
 
