@@ -5,7 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/gin-gonic/gin"

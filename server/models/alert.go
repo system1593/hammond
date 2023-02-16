@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
 )
 
 type CreateAlertModel struct {

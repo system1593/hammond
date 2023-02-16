@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
 )
 
 type MileageModel struct {

@@ -7,7 +7,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"

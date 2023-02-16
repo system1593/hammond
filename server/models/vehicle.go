@@ -3,7 +3,8 @@ package models
 import (
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
+
 	_ "github.com/go-playground/validator/v10"
 )
 

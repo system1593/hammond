@@ -1,4 +1,4 @@
-module github.com/akhilrex/hammond
+module hammond
 
 go 1.16
 

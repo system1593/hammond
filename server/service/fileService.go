@@ -13,9 +13,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/internal/sanitize"
-	"github.com/akhilrex/hammond/models"
+	"hammond/db"
+	"hammond/internal/sanitize"
+	"hammond/models"
+
 	uuid "github.com/satori/go.uuid"
 )
 

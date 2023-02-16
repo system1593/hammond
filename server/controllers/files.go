@@ -5,10 +5,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/akhilrex/hammond/common"
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/models"
-	"github.com/akhilrex/hammond/service"
+	"hammond/common"
+	"hammond/db"
+	"hammond/models"
+	"hammond/service"
+
 	"github.com/gin-gonic/gin"
 )
 

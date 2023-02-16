@@ -7,7 +7,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
+
 	"github.com/leekchan/accounting"
 )
 

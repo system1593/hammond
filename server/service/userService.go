@@ -3,8 +3,8 @@ package service
 import (
 	"strings"
 
-	"github.com/akhilrex/hammond/db"
-	"github.com/akhilrex/hammond/models"
+	"hammond/db"
+	"hammond/models"
 )
 
 func CreateUser(userModel *models.RegisterRequest, role db.Role) error {

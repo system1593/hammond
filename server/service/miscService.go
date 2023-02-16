@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
 )
 
 func CanInitializeSystem() (bool, error) {

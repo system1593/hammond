@@ -1,6 +1,6 @@
 package models
 
-import "github.com/akhilrex/hammond/db"
+import "hammond/db"
 
 type UpdateSettingModel struct {
 	Currency     string           `json:"currency" form:"currency" query:"currency"`

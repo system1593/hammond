@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/akhilrex/hammond/db"
+	"hammond/db"
 )
 
 func DrivvoParseExpenses(content []byte, user *db.User, vehicle *db.Vehicle) ([]db.Expense, []string) {
