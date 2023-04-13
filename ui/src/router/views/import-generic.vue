@@ -1,18 +1,258 @@
 <script>
 import Layout from '@layouts/main.vue'
+import { mapState } from 'vuex'
+// import axios from 'axios'
+import Papa from 'papaparse'
 
 export default {
   page: {
-    title: 'Import Generic',
-    meta: [{ name: 'description', content: 'The Import Generic page.' }],
+    title: 'Generic Import',
+    meta: [{ name: 'description', content: 'The Generic Import page.' }],
   },
-  components: { Layout }
+  components: { Layout },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    }
+  },
+  data: function () {
+    return {
+      file: null,
+      tryingToCreate: false,
+      errors: [],
+      papaConfig: { dynamicTyping: true, skipEmptyLines: true, complete: this.assignResults },
+      fileData: null,
+      fileHeadings: null,
+      myVehicles: [],
+      selectedVehicle: null,
+      invert: false,
+      fillupModel: {
+        fuelQuantity: null,
+        perUnitPrice: null,
+        totalAmount: null,
+        odoReading: null,
+        isTankFull: null,
+        hasMissedFillup: null,
+        comments: null, // [int]
+        fillingStation: null,
+        date: null,
+        fuelSubType: null,
+      }
+    }
+  },
+  computed: {
+    ...mapState('utils', ['isMobile']),
+    ...mapState('vehicles', ['vehicles']),
+    uploadButtonLabel() {
+      if (this.isMobile) {
+        if (this.file == null) {
+          return this.$t('choosephoto')
+        } else {
+          return ''
+        }
+      } else {
+        if (this.file == null) {
+          return this.$t('choosefile')
+        } else {
+          return ''
+        }
+      }
+    }
+  },
+  mounted() {
+    this.myVehicles = this.vehicles
+  },
+  methods: {
+    assignResults(results, file) {
+      this.fileData = results.data
+      this.fileHeadings = results.data[0]
+    },
+    parseCSV() {
+      if (this.file == null) {
+        return
+      }
+      this.errorMessage = ''
+      Papa.parse(this.file, this.papaConfig)
+    },
+    importData() {
+      const fillups = []
+      for (let i = 1; i < this.fileData.length; i++) {
+        const fillup = {
+          date: this.fillupModel.date !== null ? this.fileData[i][this.fillupModel.date] : null,
+          fuelSubType: this.fillupModel.fuelsubtype !== null ? this.fileData[i][this.fillupModel.fuelSubType] : null,
+          fuelQuantity: this.fillupModel.fuelQuantity !== null ? this.fileData[i][this.fillupModel.fuelQuantity] : null,
+          perUnitPrice: this.fillupModel.perUnitPrice !== null ? this.fileData[i][this.fillupModel.perUnitPrice] : null,
+          totalAmount: this.fillupModel.totalAmount > -1 ? this.fileData[i][this.fillupModel.totalAmount] : (this.fileData[i][this.fillupModel.fuelQuantity] * this.fileData[i][this.fillupModel.perUnitPrice]).toFixed(2),
+          odoReading: this.fillupModel.odoReading !== null ? this.fileData[i][this.fillupModel.odoReading] : null,
+          isTankFull: this.fillupModel.isTankFull !== null ? this.fileData[i][this.fillupModel.isTankFull] : null,
+          hasMissedFillup: this.fillupModel.hasMissedFillup !== null ? this.fileData[i][this.fillupModel.hasMissedFillup] : null,
+          comments: this.fillupModel.comments.length === 1 ? this.fileData[i][this.fillupModel.comments] : '',
+          fillingStation: this.fillupModel.fillingStation !== null ? this.fileData[i][this.fillupModel.fillingStation] : null,
+        }
+        if (this.inverted) {
+          fillup.isTankFull = !fillup.isTankFull
+        }
+        fillups.push(fillup)
+      }
+      alert(JSON.stringify(fillups[1]))
+    },
+  }
 }
 </script>
 
 <template>
   <Layout>
-    Import Generic
+    <div class="columns box">
+      <div class="column">
+        <h1 class="title">{{ $t('importgeneric') }}</h1>
+      </div>
+    </div>
+    <br />
+    <div v-if="fileData === null" class="columns">
+      <div class="column">
+        <p class="subtitle"> {{ $t('stepstoimport', { name: 'CSV or JSON' }) }}</p>
+        <ol>
+          <!-- <li>{{ $t('importhintcreatecsv', { 'name': 'Fuelly' }) }} <a href="http://docs.fuelly.com/acar-import-export-center" target="_nofollow">{{ $t('here') }}</a>.</li> -->
+          <li>{{ $t('importgenerichintdata') }}</li>
+          <li>{{ $t('importhintvehiclecreated') }}</li>
+          <li v-html="$t('importhintcurrdist')"></li>
+          <li v-html="$t('importhintunits')"></li>
+          <li><b>{{ $t('dontimportagain') }}</b></li>
+        </ol>
+      </div>
+    </div>
+    <div v-if="fileData === null" class="section box">
+      <div class="columns">
+        <div class="column is-two-thirds">
+          <p class="subtitle">{{ $t('choosedatafile') }}</p>
+        </div>
+        <div class="column is-one-third is-flex is-align-content-center">
+          <form @submit.prevent="parseCSV">
+            <div class="columns">
+              <div class="column">
+                <b-field class="file is-primary" :class="{ 'has-name': !!file }">
+                  <b-upload v-model="file" class="file-label" accept=".csv, .json" required>
+                    <span class="file-cta">
+                      <b-icon class="file-icon" icon="upload"></b-icon>
+                      <span class="file-label">{{ uploadButtonLabel }}</span>
+                    </span>
+                    <span v-if="file" class="file-name" :class="isMobile ? 'file-name-mobile' : 'file-name-desktop'">
+                      {{ file.name }}
+                    </span>
+                  </b-upload>
+                </b-field>
+              </div>
+              <div class="column">
+                <b-button tag="button" native-type="submit" type="is-primary" class="control">
+                  {{ $t('import') }}
+                </b-button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div v-if="fileData !== null" class="columns">
+      <div class="column">
+        <p class="subtitle">Map Fields</p>
+        <form class="" @submit.prevent="importData">
+          <b-field :label="$t('selectvehicle')">
+            <b-select v-model="selectedVehicle" :placeholder="$t('vehicle')" required expanded>
+              <option v-for="option in myVehicles" :key="option.id" :value="option">
+                {{ option.nickname }}
+              </option>
+            </b-select>
+          </b-field>
+          <span v-if="selectedVehicle !== null">
+            <b-field :label="$t('fillupdate')">
+              <b-select v-model="fillupModel.date" equired expanded>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('fuelsubtype')">
+              <b-select v-model="fillupModel.fuelSubType" expanded>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('quantity')">
+              <b-select v-model="fillupModel.fuelQuantity" expanded required>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field
+              :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
+              <b-select v-model.number="fillupModel.perUnitPrice" type="number" min="0" step=".001" expanded required>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('totalamountpaid')">
+              <b-select v-model.number="fillupModel.totalAmount" expanded required>
+                <option value="-1">Calculated</option>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('odometer')">
+              <b-select v-model.number="fillupModel.odoReading" expanded required>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('getafulltank')">
+              <b-select v-model="fillupModel.isTankFull">
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+              <b-checkbox-button v-model="invert" inverted>Invert Value</b-checkbox-button>
+            </b-field>
+            <b-field :label="$t('missfillupbefore')">
+              <b-select v-model="fillupModel.hasMissedFillup">
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('fillingstation')">
+              <b-select v-model="fillupModel.fillingStation">
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field :label="$t('comments')">
+              <b-select v-model="fillupModel.comments" type="textarea" multiple expanded>
+                <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
+                  {{ option }}
+                </option>
+              </b-select>
+            </b-field>
+            <br />
+            <b-field>
+              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')"
+                expanded />
+              <p v-if="authError"> There was an error logging in to your account. </p>
+            </b-field>
+          </span>
+        </form>
+      </div>
+    </div>
+    <b-message v-if="errors.length" type="is-danger">
+      <ul>
+        <li v-for="error in errors" :key="error">{{ error }}</li>
+      </ul>
+    </b-message>
   </Layout>
 </template>
 
