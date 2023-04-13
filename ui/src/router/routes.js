@@ -420,6 +420,15 @@ export default [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/import/generic',
+    name: 'import-generic',
+    component: () => lazyLoadView(import('@views/import-generic.vue')),
+    meta: {
+      authRequired: true,
+    },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/logout',
     name: 'logout',
     meta: {
