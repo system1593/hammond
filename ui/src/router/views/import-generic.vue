@@ -76,26 +76,17 @@ export default {
       Papa.parse(this.file, this.papaConfig)
     },
     importData() {
-      const fillups = []
-      for (let i = 1; i < this.fileData.length; i++) {
-        const fillup = {
-          date: this.fillupModel.date !== null ? this.fileData[i][this.fillupModel.date] : null,
-          fuelSubType: this.fillupModel.fuelsubtype !== null ? this.fileData[i][this.fillupModel.fuelSubType] : null,
-          fuelQuantity: this.fillupModel.fuelQuantity !== null ? this.fileData[i][this.fillupModel.fuelQuantity] : null,
-          perUnitPrice: this.fillupModel.perUnitPrice !== null ? this.fileData[i][this.fillupModel.perUnitPrice] : null,
-          totalAmount: this.fillupModel.totalAmount > -1 ? this.fileData[i][this.fillupModel.totalAmount] : (this.fileData[i][this.fillupModel.fuelQuantity] * this.fileData[i][this.fillupModel.perUnitPrice]).toFixed(2),
-          odoReading: this.fillupModel.odoReading !== null ? this.fileData[i][this.fillupModel.odoReading] : null,
-          isTankFull: this.fillupModel.isTankFull !== null ? this.fileData[i][this.fillupModel.isTankFull] : null,
-          hasMissedFillup: this.fillupModel.hasMissedFillup !== null ? this.fileData[i][this.fillupModel.hasMissedFillup] : null,
-          comments: this.fillupModel.comments.length === 1 ? this.fileData[i][this.fillupModel.comments] : '',
-          fillingStation: this.fillupModel.fillingStation !== null ? this.fileData[i][this.fillupModel.fillingStation] : null,
-        }
-        if (this.inverted) {
-          fillup.isTankFull = !fillup.isTankFull
-        }
-        fillups.push(fillup)
+      if (typeof this.fileData[1][this.fillupModel.isTankFull] !== "boolean") {
+        this.errors.push('The value of Tank Full needs to be a boolean (true,false).')
+        return
       }
-      alert(JSON.stringify(fillups[1]))
+      const content = {
+        headings: this.fillupModel,
+        data: this.fileData.splice(1, this.fileData.length),
+        fullTankInverted: this.inverted,
+        vehicleId: this.selectedVehicle.id
+      }
+      alert(JSON.stringify(content))
     },
   }
 }
