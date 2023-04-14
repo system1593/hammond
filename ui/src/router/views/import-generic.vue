@@ -26,11 +26,11 @@ export default {
       fileHeadings: null,
       myVehicles: [],
       selectedVehicle: null,
-      invert: false,
-      filledValue: null,
-      notFilledValue: null,
+      invertFullTank: false,
+      filledValueString: null,
+      notFilledValueString: null,
       isFullTankString: false,
-      fillupModel: {
+      fileHeadingMap: {
         fuelQuantity: null,
         perUnitPrice: null,
         totalAmount: null,
@@ -79,9 +79,9 @@ export default {
       Papa.parse(this.file, this.papaConfig)
     },
     importData() {
-      if (this.errors.length !== 0) {
+      if (this.errors.length === 0) {
         const content = {
-          headings: this.fillupModel,
+          headings: this.fileHeadingMap,
           data: this.fileData.splice(1, this.fileData.length),
           fullTankInverted: this.inverted,
           vehicleId: this.selectedVehicle.id,
@@ -92,7 +92,7 @@ export default {
       }
     },
     checkFieldString() {
-      const tankFull = this.fileData[1][this.fillupModel.isTankFull]
+      const tankFull = this.fileData[1][this.fileHeadingMap.isTankFull]
       if (typeof tankFull !== 'boolean') {
         if (typeof tankFull === 'string' && tankFull.length > 0) {
           this.isFullTankString = true
@@ -172,35 +172,35 @@ export default {
           </b-field>
           <span v-if="selectedVehicle !== null">
             <b-field :label="$t('fillupdate')">
-              <b-select v-model="fillupModel.date" equired expanded>
+              <b-select v-model="fileHeadingMap.date" equired expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('fuelsubtype')">
-              <b-select v-model="fillupModel.fuelSubType" expanded>
+              <b-select v-model="fileHeadingMap.fuelSubType" expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('quantity')">
-              <b-select v-model="fillupModel.fuelQuantity" expanded required>
+              <b-select v-model="fileHeadingMap.fuelQuantity" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
-              <b-select v-model.number="fillupModel.perUnitPrice" type="number" min="0" step=".001" expanded required>
+              <b-select v-model.number="fileHeadingMap.perUnitPrice" type="number" min="0" step=".001" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('totalamountpaid')">
-              <b-select v-model.number="fillupModel.totalAmount" expanded required>
+              <b-select v-model.number="fileHeadingMap.totalAmount" expanded required>
                 <option value="-1">Calculated</option>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -208,18 +208,18 @@ export default {
               </b-select>
             </b-field>
             <b-field :label="$t('odometer')">
-              <b-select v-model.number="fillupModel.odoReading" expanded required>
+              <b-select v-model.number="fileHeadingMap.odoReading" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('tankpartialfull')">
-              <b-radio-button v-model="invert" native-value="false">{{ $t('fulltank') }}</b-radio-button>
-              <b-radio-button v-model="invert" native-value="true">{{ $t('partialfillup') }}</b-radio-button>
+              <b-radio-button v-model="invertFullTank" native-value="false">{{ $t('fulltank') }}</b-radio-button>
+              <b-radio-button v-model="invertFullTank" native-value="true">{{ $t('partialfillup') }}</b-radio-button>
             </b-field>
             <b-field>
-              <b-select v-model="fillupModel.isTankFull" @input="checkFieldString">
+              <b-select v-model="fileHeadingMap.isTankFull" @input="checkFieldString">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
@@ -227,28 +227,28 @@ export default {
             </b-field>
             <span v-if="isFullTankString === true">
               <b-field label="Value when tank is filled">
-                <b-input v-model="filledValue"></b-input>
+                <b-input v-model="filledValueString"></b-input>
               </b-field>
               <b-field label="Value when tank was not completely filled">
-                <b-input v-model="notFilledValue"></b-input>
+                <b-input v-model="notFilledValueString"></b-input>
               </b-field>
             </span>
             <b-field :label="$t('missedfillup')">
-              <b-select v-model="fillupModel.hasMissedFillup">
+              <b-select v-model="fileHeadingMap.hasMissedFillup">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('fillingstation')">
-              <b-select v-model="fillupModel.fillingStation">
+              <b-select v-model="fileHeadingMap.fillingStation">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
             <b-field :label="$t('comments')">
-              <b-select v-model="fillupModel.comments" type="textarea" multiple expanded>
+              <b-select v-model="fileHeadingMap.comments" type="textarea" multiple expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
