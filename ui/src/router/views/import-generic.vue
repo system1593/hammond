@@ -14,7 +14,7 @@ export default {
     user: {
       type: Object,
       required: true,
-    }
+    },
   },
   data: function () {
     return {
@@ -38,7 +38,7 @@ export default {
         fillingStation: null,
         date: null,
         fuelSubType: null,
-      }
+      },
     }
   },
   computed: {
@@ -58,7 +58,7 @@ export default {
           return ''
         }
       }
-    }
+    },
   },
   mounted() {
     this.myVehicles = this.vehicles
@@ -76,7 +76,7 @@ export default {
       Papa.parse(this.file, this.papaConfig)
     },
     importData() {
-      if (typeof this.fileData[1][this.fillupModel.isTankFull] !== "boolean") {
+      if (typeof this.fileData[1][this.fillupModel.isTankFull] !== 'boolean') {
         this.errors.push('The value of Tank Full needs to be a boolean (true,false).')
         return
       }
@@ -84,11 +84,11 @@ export default {
         headings: this.fillupModel,
         data: this.fileData.splice(1, this.fileData.length),
         fullTankInverted: this.inverted,
-        vehicleId: this.selectedVehicle.id
+        vehicleId: this.selectedVehicle.id,
       }
       alert(JSON.stringify(content))
     },
-  }
+  },
 }
 </script>
 
@@ -109,7 +109,9 @@ export default {
           <li>{{ $t('importhintvehiclecreated') }}</li>
           <li v-html="$t('importhintcurrdist')"></li>
           <li v-html="$t('importhintunits')"></li>
-          <li><b>{{ $t('dontimportagain') }}</b></li>
+          <li
+            ><b>{{ $t('dontimportagain') }}</b></li
+          >
         </ol>
       </div>
     </div>
@@ -177,8 +179,7 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field
-              :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
+            <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
               <b-select v-model.number="fillupModel.perUnitPrice" type="number" min="0" step=".001" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -200,15 +201,18 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('getafulltank')">
+            <b-field :label="$t('tankpartialfull')">
+              <b-radio-button v-model="invert" native-value="false">{{ $t('fulltank') }}</b-radio-button>
+              <b-radio-button v-model="invert" native-value="true">{{ $t('partialfillup') }}</b-radio-button>
+            </b-field>
+            <b-field>
               <b-select v-model="fillupModel.isTankFull">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
-              <b-checkbox-button v-model="invert" inverted>Invert Value</b-checkbox-button>
             </b-field>
-            <b-field :label="$t('missfillupbefore')">
+            <b-field :label="$t('missedfillup')">
               <b-select v-model="fillupModel.hasMissedFillup">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -231,8 +235,7 @@ export default {
             </b-field>
             <br />
             <b-field>
-              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')"
-                expanded />
+              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')" expanded />
               <p v-if="authError"> There was an error logging in to your account. </p>
             </b-field>
           </span>

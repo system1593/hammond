@@ -5,7 +5,7 @@
     "thismonth": "This month",
     "pastxdays": "Past one day | Past {count} days",
     "pastxmonths": "Past one month | Past {count} months",
-    "thisyear": "This year", 
+    "thisyear": "This year",
     "alltime": "All Time",
     "noattachments": "No Attachments so far",
     "attachments": "Attachments",
@@ -43,15 +43,15 @@
     "createnow": "Create Now",
     "yourvehicles": "Your Vehicles",
     "menu": {
-      "quickentries": "Quick Entries",
-      "logout": "Log out",
-      "import": "Import",
-      "home": "Home",
-      "settings": "Settings",
-      "admin": "Admin",
-      "sitesettings": "Site Settings",
-      "users": "Users",
-      "login": "Log in"
+        "quickentries": "Quick Entries",
+        "logout": "Log out",
+        "import": "Import",
+        "home": "Home",
+        "settings": "Settings",
+        "admin": "Admin",
+        "sitesettings": "Site Settings",
+        "users": "Users",
+        "login": "Log in"
     },
     "enterusername": "Enter your username",
     "enterpassword": "Enter your password",
@@ -81,34 +81,34 @@
     "quantity": "Quantity",
     "gasstation": "Gas Station",
     "fuel": {
-      "petrol": "Petrol",
-      "diesel": "Diesel",
-      "cng": "CNG",
-      "lpg": "LPG",
-      "electric": "Electric",
-      "ethanol": "Ethanol"
+        "petrol": "Petrol",
+        "diesel": "Diesel",
+        "cng": "CNG",
+        "lpg": "LPG",
+        "electric": "Electric",
+        "ethanol": "Ethanol"
     },
     "unit": {
-      "long": {
-        "litre": "Litre",
-        "gallon": "Gallon",
-        "kilowatthour": "Kilowatt Hour",
-        "kilogram": "Kilogram",
-        "usgallon": "US Gallon",
-        "minutes": "Minutes",
-        "kilometers": "Kilometers",
-        "miles": "Miles"
-      },
-      "short": {
-        "litre": "Lt",
-        "gallon": "Gal",
-        "kilowatthour": "KwH",
-        "kilogram": "Kg",
-        "usgallon": "US Gal",
-        "minutes": "Mins",
-        "kilometers": "Km",
-        "miles": "Mi"
-      }
+        "long": {
+            "litre": "Litre",
+            "gallon": "Gallon",
+            "kilowatthour": "Kilowatt Hour",
+            "kilogram": "Kilogram",
+            "usgallon": "US Gallon",
+            "minutes": "Minutes",
+            "kilometers": "Kilometers",
+            "miles": "Miles"
+        },
+        "short": {
+            "litre": "Lt",
+            "gallon": "Gal",
+            "kilowatthour": "KwH",
+            "kilogram": "Kg",
+            "usgallon": "US Gal",
+            "minutes": "Mins",
+            "kilometers": "Km",
+            "miles": "Mi"
+        }
     },
     "avgfillupqty": "Avg Fillup Qty",
     "avgfillupexpense": "Avg Fillup Expense",
@@ -117,7 +117,9 @@
     "price": "Price",
     "total": "Total",
     "fulltank": "Tank Full",
+    "partialfillup": "Partial Fillup",
     "getafulltank": "Did you get a full tank?",
+    "tankpartialfull": "Which do you track?",
     "by": "By",
     "expenses": "Expenses",
     "expensetype": "Expense Type",
@@ -182,6 +184,7 @@
     "fillingstation": "Filling Station Name",
     "comments": "Comments",
     "missfillupbefore": "Did you miss the fillup entry before this one?",
+    "missedfillup": "Missed Fillup",
     "fillupdate": "Fillup Date",
     "fillupsavedsuccessfully": "Fillup Saved Successfully",
     "expensesavedsuccessfully": "Expense Saved Successfully",
@@ -199,25 +202,25 @@
     "testconn": "Test Connection",
     "migrate": "Migrate",
     "init": {
-      "migrateclarkson": "Migrate from Clarkson",
-      "migrateclarksondesc": "If you have an existing Clarkson deployment and you want to migrate your data from that, press the following button.",
-      "freshinstall": "Fresh Install",
-      "freshinstalldesc": "If you want a fresh install of Hammond, press the following button.",
-      "clarkson": {
-        "desc": "<p>You need to make sure that this deployment of Hammond can access the MySQL database used by Clarkson.</p><p>If that is not directly possible, you can make a copy of that database somewhere accessible from this instance.</p><p>Once that is done, enter the connection string to the MySQL instance in the following format.</p><p>All the users imported from Clarkson will have their username as their email in Clarkson database and pasword set to<span class='' style='font-weight:bold'>hammond</span></p><code>user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local</code><br/><br/>",
-        "success": "We have successfully migrated the data from Clarkson. You will be redirected to the login screen shortly where you can login using your existing email and password : hammond"
-      },
-      "fresh": {
-        "setupadminuser": "Setup Admin Users",
-        "yourpassword": "Your Password",
-        "youremail": "Your Email",
-        "yourname": "Your Name",
-        "success": "You have been registered successfully. You will be redirected to the login screen shortly where you can login and start using the system."
-      }
+        "migrateclarkson": "Migrate from Clarkson",
+        "migrateclarksondesc": "If you have an existing Clarkson deployment and you want to migrate your data from that, press the following button.",
+        "freshinstall": "Fresh Install",
+        "freshinstalldesc": "If you want a fresh install of Hammond, press the following button.",
+        "clarkson": {
+            "desc": "<p>You need to make sure that this deployment of Hammond can access the MySQL database used by Clarkson.</p><p>If that is not directly possible, you can make a copy of that database somewhere accessible from this instance.</p><p>Once that is done, enter the connection string to the MySQL instance in the following format.</p><p>All the users imported from Clarkson will have their username as their email in Clarkson database and pasword set to<span class='' style='font-weight:bold'>hammond</span></p><code>user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local</code><br/><br/>",
+            "success": "We have successfully migrated the data from Clarkson. You will be redirected to the login screen shortly where you can login using your existing email and password : hammond"
+        },
+        "fresh": {
+            "setupadminuser": "Setup Admin Users",
+            "yourpassword": "Your Password",
+            "youremail": "Your Email",
+            "yourname": "Your Name",
+            "success": "You have been registered successfully. You will be redirected to the login screen shortly where you can login and start using the system."
+        }
     },
     "roles": {
-      "ADMIN": "ADMIN",
-      "USER": "USER"
+        "ADMIN": "ADMIN",
+        "USER": "USER"
     },
     "profile": "Profile",
     "processedon": "Processed on",
@@ -225,4 +228,4 @@
     "disable": "Disable",
     "confirm": "Go Ahead",
     "labelforfile": "Label for this file"
-  }
+}
