@@ -27,6 +27,9 @@ export default {
       myVehicles: [],
       selectedVehicle: null,
       invert: false,
+      filledValue: null,
+      notFilledValue: null,
+      isFullTankString: false,
       fillupModel: {
         fuelQuantity: null,
         perUnitPrice: null,
@@ -76,17 +79,27 @@ export default {
       Papa.parse(this.file, this.papaConfig)
     },
     importData() {
-      if (typeof this.fileData[1][this.fillupModel.isTankFull] !== 'boolean') {
-        this.errors.push('The value of Tank Full needs to be a boolean (true,false).')
-        return
+      if (this.errors.length !== 0) {
+        const content = {
+          headings: this.fillupModel,
+          data: this.fileData.splice(1, this.fileData.length),
+          fullTankInverted: this.inverted,
+          vehicleId: this.selectedVehicle.id,
+        }
+        alert(JSON.stringify(content))
+      } else {
+        this.errors.push('fix errors')
       }
-      const content = {
-        headings: this.fillupModel,
-        data: this.fileData.splice(1, this.fileData.length),
-        fullTankInverted: this.inverted,
-        vehicleId: this.selectedVehicle.id,
+    },
+    checkFieldString() {
+      const tankFull = this.fileData[1][this.fillupModel.isTankFull]
+      if (typeof tankFull !== 'boolean') {
+        if (typeof tankFull === 'string' && tankFull.length > 0) {
+          this.isFullTankString = true
+        } else {
+          this.errors.push('The value of Tank Full needs to be a boolean (true,false) or consistent string.')
+        }
       }
-      alert(JSON.stringify(content))
     },
   },
 }
@@ -206,12 +219,20 @@ export default {
               <b-radio-button v-model="invert" native-value="true">{{ $t('partialfillup') }}</b-radio-button>
             </b-field>
             <b-field>
-              <b-select v-model="fillupModel.isTankFull">
+              <b-select v-model="fillupModel.isTankFull" @input="checkFieldString">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
+            <span v-if="isFullTankString === true">
+              <b-field label="Value when tank is filled">
+                <b-input v-model="filledValue"></b-input>
+              </b-field>
+              <b-field label="Value when tank was not completely filled">
+                <b-input v-model="notFilledValue"></b-input>
+              </b-field>
+            </span>
             <b-field :label="$t('missedfillup')">
               <b-select v-model="fillupModel.hasMissedFillup">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
