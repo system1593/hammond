@@ -1,7 +1,7 @@
 <script>
 import Layout from '@layouts/main.vue'
 import { mapState } from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 import Papa from 'papaparse'
 
 export default {
@@ -78,11 +78,12 @@ export default {
       this.errorMessage = ''
       Papa.parse(this.file, this.papaConfig)
     },
+    getUsedHeadings() {
+      return Object.keys(this.fileHeadingMap).filter((k) => this.fileHeadingMap[k] != null) // filter non-null properties
+    },
     csvToJson() {
       const data = []
-      const headings = Object.keys(this.fileHeadingMap)
-        .filter((k) => this.fileHeadingMap[k] != null) // filter non-null properties
-        .reduce((a, k) => ({ ...a, [k]: this.fileHeadingMap[k] }), {}) // create new object from filter
+      const headings = this.getUsedHeadings().reduce((a, k) => ({ ...a, [k]: this.fileHeadingMap[k] }), {}) // create new object from filter
       const comments = (row) => {
         return this.fileHeadingMap.comments.reduce((a, fi) => {
           // TODO: sanitize to prevent XSS
@@ -95,6 +96,17 @@ export default {
           : row[this.fileHeadingMap.totalAmount]
       }
 
+      const setFullTank = (row) => {
+        if (row[this.fileHeadingMap.isTankFull] === this.filledValueString) {
+          return true
+        } else if (row[this.fileHeadingMap.isTankFull] === this.notFilledValueString) {
+          return false
+        } else {
+          // TODO: need to handle errors better
+          throw Error
+        }
+      }
+
       for (let r = 1; r < this.fileData.length; r++) {
         const row = this.fileData[r]
         const item = {}
@@ -103,6 +115,10 @@ export default {
             item[k] = comments(row)
           } else if (k === 'totalAmount') {
             item[k] = calculateTotal(row)
+          } else if (this.isFullTankString) {
+            item[k] = setFullTank(row)
+          } else if (this.invertFullTank) {
+            item[k] = !row[headings[k]]
           } else {
             item[k] = row[headings[k]]
           }
@@ -114,10 +130,34 @@ export default {
     importData() {
       if (this.errors.length === 0) {
         try {
-          const content = this.csvToJson()
-          alert(JSON.stringify(content))
+          const content = {
+            data: this.csvToJson(),
+            vehicleId: this.selectedVehicle.Id,
+          }
+          axios
+            .post('/api/import/generic', content)
+            .then((data) => {
+              this.$buefy.toast.open({
+                message: this.$t('importsuccessfull'),
+                type: 'is-success',
+                duration: 3000,
+              })
+              setTimeout(() => this.$router.push({ name: 'home' }), 1000)
+            })
+            .catch((ex) => {
+              this.$buefy.toast.open({
+                duration: 5000,
+                message: this.$t('importerror'),
+                position: 'is-bottom',
+                type: 'is-danger',
+              })
+              if (ex.response && ex.response.data.errors) {
+                this.errors = ex.response.data.errors
+              }
+            })
         } catch (e) {
-          alert(e)
+          // TODO: handle error
+          this.errors.push(e)
         }
       } else {
         this.errors.push('fix errors')
