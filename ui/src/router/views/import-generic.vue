@@ -78,15 +78,47 @@ export default {
       this.errorMessage = ''
       Papa.parse(this.file, this.papaConfig)
     },
+    csvToJson() {
+      const data = []
+      const headings = Object.keys(this.fileHeadingMap)
+        .filter((k) => this.fileHeadingMap[k] != null) // filter non-null properties
+        .reduce((a, k) => ({ ...a, [k]: this.fileHeadingMap[k] }), {}) // create new object from filter
+      const comments = (row) => {
+        return this.fileHeadingMap.comments.reduce((a, fi) => {
+          // TODO: sanitize to prevent XSS
+          return `${a}${this.fileHeadings[fi]}: ${row[fi]}\n`
+        }, '')
+      }
+      const calculateTotal = (row) => {
+        return this.fileHeadingMap.totalAmount === -1
+          ? (row[this.fileHeadings.fuelQuantity] * row[this.fileHeadings.perUnitPrice]).toFixed(2)
+          : row[this.fileHeadingMap.totalAmount]
+      }
+
+      for (let r = 1; r < this.fileData.length; r++) {
+        const row = this.fileData[r]
+        const item = {}
+        Object.keys(headings).forEach((k) => {
+          if (k === 'comments') {
+            item[k] = comments(row)
+          } else if (k === 'totalAmount') {
+            item[k] = calculateTotal(row)
+          } else {
+            item[k] = row[headings[k]]
+          }
+        })
+        data.push(item)
+      }
+      return data
+    },
     importData() {
       if (this.errors.length === 0) {
-        const content = {
-          headings: this.fileHeadingMap,
-          data: this.fileData.splice(1, this.fileData.length),
-          fullTankInverted: this.inverted,
-          vehicleId: this.selectedVehicle.id,
+        try {
+          const content = this.csvToJson()
+          alert(JSON.stringify(content))
+        } catch (e) {
+          alert(e)
         }
-        alert(JSON.stringify(content))
       } else {
         this.errors.push('fix errors')
       }
