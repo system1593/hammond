@@ -231,7 +231,7 @@ export default {
         </div>
       </div>
     </div>
-    <div v-if="fileData !== null" class="columns">
+    <div v-else class="columns">
       <div class="column">
         <p class="subtitle">Map Fields</p>
         <form class="" @submit.prevent="importData">
@@ -244,7 +244,7 @@ export default {
           </b-field>
           <span v-if="selectedVehicle !== null">
             <b-field :label="$t('fillupdate')">
-              <b-select v-model="fileHeadingMap.date" equired expanded>
+              <b-select v-model="fileHeadingMap.date" required expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
@@ -291,13 +291,13 @@ export default {
               <b-radio-button v-model="invertFullTank" native-value="true">{{ $t('partialfillup') }}</b-radio-button>
             </b-field>
             <b-field>
-              <b-select v-model="fileHeadingMap.isTankFull" @input="checkFieldString">
+              <b-select v-model="fileHeadingMap.isTankFull" @input="checkFieldString" required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
-            <span v-if="isFullTankString === true">
+            <span v-if="isFullTankString === true" required>
               <b-field label="Value when tank is filled">
                 <b-input v-model="filledValueString"></b-input>
               </b-field>
