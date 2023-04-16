@@ -4,6 +4,7 @@ import (
 	"bytes"
 
 	"hammond/db"
+	"hammond/models"
 )
 
 func WriteToDB(fillups []db.Fillup, expenses []db.Expense) []string {
@@ -104,4 +105,28 @@ func FuellyImport(content []byte, userId string) []string {
 	}
 
 	return WriteToDB(fillups, expenses)
+}
+
+func GenericImport(content models.ImportData, userId string) []string {
+	var errors []string
+	user, err := GetUserById(userId)
+	if err != nil {
+		errors = append(errors, err.Error())
+		return errors
+	}
+
+	vehicle, err := GetVehicleById(content.VehicleId)
+	if err != nil {
+		errors = append(errors, err.Error())
+		return errors
+	}
+
+	var fillups []db.Fillup
+	fillups, errors = GenericParseRefuelings(content.Data, user, vehicle, content.TimeZone)
+
+	if len(errors) != 0 {
+		return errors
+	}
+
+	return WriteToDB(fillups, nil)
 }
