@@ -81,6 +81,9 @@ export default {
     getUsedHeadings() {
       return Object.keys(this.fileHeadingMap).filter((k) => this.fileHeadingMap[k] != null) // filter non-null properties
     },
+    getTimezone() {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone
+    },
     csvToJson() {
       const data = []
       const headings = this.getUsedHeadings().reduce((a, k) => ({ ...a, [k]: this.fileHeadingMap[k] }), {}) // create new object from filter
@@ -119,6 +122,8 @@ export default {
             item[k] = setFullTank(row)
           } else if (this.invertFullTank) {
             item[k] = !row[headings[k]]
+          } else if ('date') {
+            item[k] = new Date(row[headings[k]]).toISOString()
           } else {
             item[k] = row[headings[k]]
           }
@@ -133,6 +138,7 @@ export default {
           const content = {
             data: this.csvToJson(),
             vehicleId: this.selectedVehicle.Id,
+            timezone: this.getTimezone()
           }
           axios
             .post('/api/import/generic', content)
@@ -194,9 +200,7 @@ export default {
           <li>{{ $t('importhintvehiclecreated') }}</li>
           <li v-html="$t('importhintcurrdist')"></li>
           <li v-html="$t('importhintunits')"></li>
-          <li
-            ><b>{{ $t('dontimportagain') }}</b></li
-          >
+          <li><b>{{ $t('dontimportagain') }}</b></li>
         </ol>
       </div>
     </div>
@@ -264,7 +268,8 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
+            <b-field
+              :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
               <b-select v-model.number="fileHeadingMap.perUnitPrice" type="number" min="0" step=".001" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -328,7 +333,8 @@ export default {
             </b-field>
             <br />
             <b-field>
-              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')" expanded />
+              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')"
+                expanded />
               <p v-if="authError"> There was an error logging in to your account. </p>
             </b-field>
           </span>
