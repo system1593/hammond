@@ -37,7 +37,7 @@ export default {
         odoReading: null,
         isTankFull: null,
         hasMissedFillup: null,
-        comments: null, // [int]
+        comments: [], // [int]
         fillingStation: null,
         date: null,
         fuelSubType: null,
@@ -94,7 +94,7 @@ export default {
         }, '')
       }
       const calculateTotal = (row) => {
-        return this.fileHeadingMap.totalAmount === -1
+        return this.fileHeadingMap.totalAmount === "-1"
           ? (row[this.fileHeadings.fuelQuantity] * row[this.fileHeadings.perUnitPrice]).toFixed(2)
           : row[this.fileHeadingMap.totalAmount]
       }
@@ -120,8 +120,13 @@ export default {
             item[k] = calculateTotal(row)
           } else if (this.isFullTankString) {
             item[k] = setFullTank(row)
-          } else if (this.invertFullTank) {
-            item[k] = !row[headings[k]]
+          } else if (k === 'isTankFull') {
+            if (this.invertFullTank) {
+              item[k] = Boolean(!row[headings[k]])
+            } else {
+              item[k] = Boolean(row[headings[k]])
+            }
+          } else if (k === 'hasMissedFillup') {
           } else if (k === 'date') {
             item[k] = new Date(row[headings[k]]).toISOString()
           } else {
@@ -157,8 +162,9 @@ export default {
                 position: 'is-bottom',
                 type: 'is-danger',
               })
-              if (ex.response && ex.response.data.errors) {
-                this.errors = ex.response.data.errors
+              console.log(ex)
+              if (ex.response && ex.response.data.error) {
+                this.errors.push(ex.response.data.error)
               }
             })
         } catch (e) {
@@ -171,14 +177,10 @@ export default {
     },
     checkFieldString() {
       const tankFull = this.fileData[1][this.fileHeadingMap.isTankFull]
-      if (typeof tankFull !== 'boolean') {
-        if (typeof tankFull === 'string' && tankFull.length > 0) {
-          this.isFullTankString = true
-        } else {
-          this.errors.push('The value of Tank Full needs to be a boolean (true,false) or consistent string.')
-        }
+      if (typeof tankFull !== 'boolean' && typeof tankFull === 'string') {
+        this.isFullTankString = true
       }
-    },
+    }
   },
 }
 </script>
@@ -200,9 +202,7 @@ export default {
           <li>{{ $t('importhintvehiclecreated') }}</li>
           <li v-html="$t('importhintcurrdist')"></li>
           <li v-html="$t('importhintunits')"></li>
-          <li
-            ><b>{{ $t('dontimportagain') }}</b></li
-          >
+          <li><b>{{ $t('dontimportagain') }}</b></li>
         </ol>
       </div>
     </div>
@@ -270,7 +270,8 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
+            <b-field
+              :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
               <b-select v-model.number="fileHeadingMap.perUnitPrice" type="number" min="0" step=".001" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -334,7 +335,8 @@ export default {
             </b-field>
             <br />
             <b-field>
-              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')" expanded />
+              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')"
+                expanded />
               <p v-if="authError"> There was an error logging in to your account. </p>
             </b-field>
           </span>
