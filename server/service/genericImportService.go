@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"hammond/db"
 	"hammond/models"
 	"time"
@@ -15,7 +14,6 @@ func GenericParseRefuelings(content []models.ImportFillup, user *db.User, vehicl
 	for _, record := range content {
 		date, err := time.ParseInLocation(dateLayout, record.Date, loc)
 		if err != nil {
-			fmt.Println(err)
 			date = time.Date(2000, time.December, 0, 0, 0, 0, 0, loc)
 		}
 
