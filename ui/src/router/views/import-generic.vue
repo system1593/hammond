@@ -94,8 +94,8 @@ export default {
         }, '')
       }
       const calculateTotal = (row) => {
-        return this.fileHeadingMap.totalAmount === "-1"
-          ? (row[this.fileHeadings.fuelQuantity] * row[this.fileHeadings.perUnitPrice]).toFixed(2)
+        return this.fileHeadingMap.totalAmount === -1
+          ? row[this.fileHeadingMap.fuelQuantity] * row[this.fileHeadingMap.perUnitPrice]
           : row[this.fileHeadingMap.totalAmount]
       }
 
@@ -142,7 +142,7 @@ export default {
         try {
           const content = {
             data: this.csvToJson(),
-            vehicleId: this.selectedVehicle.Id,
+            vehicleId: this.selectedVehicle.id,
             timezone: this.getTimezone(),
           }
           axios
@@ -180,7 +180,7 @@ export default {
       if (typeof tankFull !== 'boolean' && typeof tankFull === 'string') {
         this.isFullTankString = true
       }
-    }
+    },
   },
 }
 </script>
@@ -202,7 +202,9 @@ export default {
           <li>{{ $t('importhintvehiclecreated') }}</li>
           <li v-html="$t('importhintcurrdist')"></li>
           <li v-html="$t('importhintunits')"></li>
-          <li><b>{{ $t('dontimportagain') }}</b></li>
+          <li>
+            <b>{{ $t('dontimportagain') }}</b>
+          </li>
         </ol>
       </div>
     </div>
@@ -270,8 +272,7 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field
-              :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
+            <b-field :label="$t('per', { '0': $t('price'), '1': $t('unit.short.' + selectedVehicle.fuelUnitDetail.key) })">
               <b-select v-model.number="fileHeadingMap.perUnitPrice" type="number" min="0" step=".001" expanded required>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -335,8 +336,7 @@ export default {
             </b-field>
             <br />
             <b-field>
-              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')"
-                expanded />
+              <b-button tag="button" native-type="submit" type="is-primary" :value="$t('save')" :label="$t('import')" expanded />
               <p v-if="authError"> There was an error logging in to your account. </p>
             </b-field>
           </span>
