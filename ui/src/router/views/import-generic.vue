@@ -181,6 +181,13 @@ export default {
         this.isFullTankString = true
       }
     },
+    clearHeadingProperty(property) {
+      if (property === 'comments') {
+        this.fileHeadingMap[property] = []
+      } else {
+        this.fileHeadingMap[property] = null
+      }
+    },
   },
 }
 </script>
@@ -258,7 +265,19 @@ export default {
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('fuelsubtype')">
+            <b-field>
+              <template v-slot:label>
+                {{ $t('fuelsubtype') }}
+                <b-tooltip type="is-dark" label="Clear selection">
+                  <b-button
+                    type="is-ghost"
+                    size="is-small"
+                    icon-pack="fas"
+                    icon-right="arrow-rotate-left"
+                    @click="clearHeadingProperty('fuelSubType')"
+                  ></b-button>
+                </b-tooltip>
+              </template>
               <b-select v-model="fileHeadingMap.fuelSubType" expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
@@ -313,21 +332,57 @@ export default {
                 <b-input v-model="notFilledValueString"></b-input>
               </b-field>
             </span>
-            <b-field :label="$t('missedfillup')">
+            <b-field>
+              <template v-slot:label>
+                {{ $t('missedfillup') }}
+                <b-tooltip type="is-dark" label="Clear selection">
+                  <b-button
+                    type="is-ghost"
+                    size="is-small"
+                    icon-pack="fas"
+                    icon-right="arrow-rotate-left"
+                    @click="clearHeadingProperty('hasMissedFillup')"
+                  ></b-button>
+                </b-tooltip>
+              </template>
               <b-select v-model="fileHeadingMap.hasMissedFillup">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('fillingstation')">
+            <b-field>
+              <template v-slot:label>
+                {{ $t('fillingstation') }}
+                <b-tooltip type="is-dark" label="Clear selection">
+                  <b-button
+                    type="is-ghost"
+                    size="is-small"
+                    icon-pack="fas"
+                    icon-right="arrow-rotate-left"
+                    @click="clearHeadingProperty('fillingStation')"
+                  ></b-button>
+                </b-tooltip>
+              </template>
               <b-select v-model="fileHeadingMap.fillingStation">
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="$t('comments')">
+            <b-field>
+              <template v-slot:label>
+                {{ $t('comments') }}
+                <b-tooltip type="is-dark" label="Clear selection">
+                  <b-button
+                    type="is-ghost"
+                    size="is-small"
+                    icon-pack="fas"
+                    icon-right="arrow-rotate-left"
+                    @click="clearHeadingProperty('comments')"
+                  ></b-button>
+                </b-tooltip>
+              </template>
               <b-select v-model="fileHeadingMap.comments" type="textarea" multiple expanded>
                 <option v-for="(option, index) in fileHeadings" :key="index" :value="index">
                   {{ option }}
