@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"hammond/db"
 	"hammond/models"
 	"time"
@@ -9,11 +10,12 @@ import (
 func GenericParseRefuelings(content []models.ImportFillup, user *db.User, vehicle *db.Vehicle, timezone string) ([]db.Fillup, []string) {
 	var errors []string
 	var fillups []db.Fillup
-	dateLayout := "2023-04-16T04:41:25.682Z"
+	dateLayout := "2006-01-02T15:04:05.000Z"
 	loc, _ := time.LoadLocation(timezone)
 	for _, record := range content {
-		date, err := time.ParseInLocation(record.Date, dateLayout, loc)
+		date, err := time.ParseInLocation(dateLayout, record.Date, loc)
 		if err != nil {
+			fmt.Println(err)
 			date = time.Date(2000, time.December, 0, 0, 0, 0, 0, loc)
 		}
 
@@ -24,23 +26,23 @@ func GenericParseRefuelings(content []models.ImportFillup, user *db.User, vehicl
 			missedFillup = *record.HasMissedFillup
 		}
 
-	fillups = append(fillups, db.Fillup{
-		VehicleID: 				vehicle.ID,
-		UserID: 					user.ID,
-		Date: 						date,
-		IsTankFull: 			record.IsTankFull,
-		HasMissedFillup: 	&missedFillup,
-		FuelQuantity: 		float32(record.FuelQuantity),
-		PerUnitPrice: 		float32(record.PerUnitPrice),
-		FillingStation: 	record.FillingStation,
-		OdoReading: 			record.OdoReading,
-		TotalAmount: 			float32(record.TotalAmount),
-		FuelUnit: 				vehicle.FuelUnit,
-		Currency: 				user.Currency,
-		DistanceUnit: 		user.DistanceUnit,
-		Comments: 				record.Comments,
-		Source: 					"Generic Import",
-	})
+		fillups = append(fillups, db.Fillup{
+			VehicleID:       vehicle.ID,
+			UserID:          user.ID,
+			Date:            date,
+			IsTankFull:      record.IsTankFull,
+			HasMissedFillup: &missedFillup,
+			FuelQuantity:    float32(record.FuelQuantity),
+			PerUnitPrice:    float32(record.PerUnitPrice),
+			FillingStation:  record.FillingStation,
+			OdoReading:      record.OdoReading,
+			TotalAmount:     float32(record.TotalAmount),
+			FuelUnit:        vehicle.FuelUnit,
+			Currency:        user.Currency,
+			DistanceUnit:    user.DistanceUnit,
+			Comments:        record.Comments,
+			Source:          "Generic Import",
+		})
 	}
 
 	return fillups, errors
