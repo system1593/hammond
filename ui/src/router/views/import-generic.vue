@@ -16,7 +16,7 @@ export default {
       required: true,
     },
   },
-  data: function () {
+  data: function() {
     return {
       file: null,
       tryingToCreate: false,
@@ -118,15 +118,19 @@ export default {
             item[k] = comments(row)
           } else if (k === 'totalAmount') {
             item[k] = calculateTotal(row)
-          } else if (this.isFullTankString) {
-            item[k] = setFullTank(row)
           } else if (k === 'isTankFull') {
-            if (this.invertFullTank) {
-              item[k] = Boolean(!row[headings[k]])
+            if (this.isFullTankString) {
+              item[k] = setFullTank(row)
             } else {
-              item[k] = Boolean(row[headings[k]])
+              if (this.invertFullTank) {
+                item[k] = Boolean(!row[headings[k]])
+              } else {
+                item[k] = Boolean(row[headings[k]])
+              }
             }
           } else if (k === 'hasMissedFillup') {
+            // TODO: need to account for this field being a string
+            item[k] = Boolean(row[headings[k]])
           } else if (k === 'date') {
             item[k] = new Date(row[headings[k]]).toISOString()
           } else {
@@ -405,4 +409,3 @@ export default {
     </b-message>
   </Layout>
 </template>
-
