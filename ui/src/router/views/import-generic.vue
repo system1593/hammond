@@ -27,8 +27,8 @@ export default {
       myVehicles: [],
       selectedVehicle: null,
       invertFullTank: false,
-      filledValueString: null,
-      notFilledValueString: null,
+      filledValueString: '',
+      notFilledValueString: '',
       isFullTankString: false,
       fileHeadingMap: {
         fuelQuantity: null,
@@ -100,9 +100,9 @@ export default {
       }
 
       const setFullTank = (row) => {
-        if (row[this.fileHeadingMap.isTankFull] === this.filledValueString) {
+        if (row[this.fileHeadingMap.isTankFull].toLowerCase() === this.filledValueString.toLowerCase()) {
           return true
-        } else if (row[this.fileHeadingMap.isTankFull] === this.notFilledValueString) {
+        } else if (row[this.fileHeadingMap.isTankFull].toLowerCase() === this.notFilledValueString.toLowerCase()) {
           return false
         } else {
           // TODO: need to handle errors better
