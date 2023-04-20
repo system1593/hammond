@@ -16,7 +16,7 @@ export default {
       required: true,
     },
   },
-  data: function() {
+  data: function () {
     return {
       file: null,
       tryingToCreate: false,
@@ -26,7 +26,7 @@ export default {
       fileHeadings: null,
       myVehicles: [],
       selectedVehicle: null,
-      invertFullTank: false,
+      invertFullTank: null,
       filledValueString: '',
       notFilledValueString: '',
       isFullTankString: false,
