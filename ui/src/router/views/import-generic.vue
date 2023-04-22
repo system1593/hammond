@@ -206,7 +206,7 @@ export default {
     <br />
     <div v-if="fileData === null" class="columns">
       <div class="column">
-        <p class="subtitle"> {{ $t('stepstoimport', { name: 'CSV or JSON' }) }}</p>
+        <p class="subtitle"> {{ $t('stepstoimport', { name: 'CSV' }) }}</p>
         <ol>
           <!-- <li>{{ $t('importhintcreatecsv', { 'name': 'Fuelly' }) }} <a href="http://docs.fuelly.com/acar-import-export-center" target="_nofollow">{{ $t('here') }}</a>.</li> -->
           <li>{{ $t('importgenerichintdata') }}</li>
@@ -229,7 +229,7 @@ export default {
             <div class="columns">
               <div class="column">
                 <b-field class="file is-primary" :class="{ 'has-name': !!file }">
-                  <b-upload v-model="file" class="file-label" accept=".csv, .json" required>
+                  <b-upload v-model="file" class="file-label" accept=".csv" required>
                     <span class="file-cta">
                       <b-icon class="file-icon" icon="upload"></b-icon>
                       <span class="file-label">{{ uploadButtonLabel }}</span>
