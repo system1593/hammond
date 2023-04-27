@@ -137,7 +137,7 @@
     "dontimportagain": "Achte darauf, dass du die Datei nicht erneut importierst, da dies zu mehrfachen Einträgen führen würde.",
     "checkpointsimportcsv": "Wenn du alle diese Punkte überprüft hast kannst du unten die CSV importieren.",
     "importhintunits": "Vergewissere dich ebenfalls, dass die <u>Kraftstoffeinheit</u> und der <u>Kraftstofftyp</u> im Fahrzeug richtig eingestellt sind.",
-    "importhintcurrdist": "Stelle sicher, dass die <u>Währung</u> und die <u>Entfernungseinheit</u> in Hammond korrekt eingestellt sind. Der Import erkennt die Währung nicht automatisch aus der CSV-Datei, sondern verwendet die für den Benutzer eingestellte Währung.",
+    "importhintcurrdist": "Stelle sicher, dass die <u>Währung</u> und die <u>Entfernungseinheit</u> in Hammond korrekt eingestellt sind. Der Import erkennt die Währung nicht automatisch aus der datei, sondern verwendet die für den Benutzer eingestellte Währung.",
     "importhintnickname": "Vergewissere dich, dass der Fahrzeugname in Hammond genau mit dem Namen in der Fuelly-CSV-Datei übereinstimmt, sonst funktioniert der Import nicht.",
     "importhintvehiclecreated": "Vergewissere dich, dass du die Fahrzeuge bereits in Hammond erstellt hast.",
     "importhintcreatecsv": "Exportiere deine Daten aus {name} im CSV-Format. Die Schritte dazu findest du",
