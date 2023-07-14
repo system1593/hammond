@@ -1,6 +1,5 @@
 <p align="center">
   <h1 align="center" style="margin-bottom:0">Hammond</h1>
-  <p align="center">Current Version - 2022.07.06</p>
 
   <p align="center">
     A self-hosted vehicle expense tracking system with support for multiple users.
