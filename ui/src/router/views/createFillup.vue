@@ -76,6 +76,9 @@ export default {
     this.fetchVehicleFuelSubTypes()
     if (!this.fillup.id) {
       this.fillupModel = this.getEmptyFillup()
+      if (this.vehicle.fillups.length > 0) {
+        this.fillupModel.odoReading = this.vehicle.fillups[0].odoReading
+      }
       this.fillupModel.userId = this.me.id
     }
   },
@@ -277,7 +280,15 @@ export default {
       </b-field>
       <br />
       <b-field>
-        <b-button tag="button" native-type="submit" :disabled="tryingToCreate" type="is-primary" :value="$t('save')" :label="$t('createfillup')" expanded/> 
+        <b-button
+          tag="button"
+          native-type="submit"
+          :disabled="tryingToCreate"
+          type="is-primary"
+          :value="$t('save')"
+          :label="$t('createfillup')"
+          expanded
+        />
         <p v-if="authError">
           There was an error logging in to your account.
         </p>
