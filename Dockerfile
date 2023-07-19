@@ -1,4 +1,4 @@
-ARG GO_VERSION=1.16.2
+ARG GO_VERSION=1.20.6
 FROM golang:${GO_VERSION}-alpine AS builder
 RUN apk update && apk add alpine-sdk git && rm -rf /var/cache/apk/*
 RUN mkdir -p /api
@@ -9,7 +9,7 @@ RUN go mod download
 COPY ./server .
 RUN go build -o ./app ./main.go
 
-FROM node:14 as build-stage
+FROM node:16 as build-stage
 WORKDIR /app
 COPY ./ui/package*.json ./
 RUN npm install
