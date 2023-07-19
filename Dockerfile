@@ -12,6 +12,7 @@ RUN go build -o ./app ./main.go
 FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY ./ui/package*.json ./
+RUN apk add --no-cache autoconf
 RUN npm install
 COPY ./ui .
 RUN npm run build
