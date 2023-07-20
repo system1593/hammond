@@ -9,9 +9,10 @@ RUN go mod download
 COPY ./server .
 RUN go build -o ./app ./main.go
 
-FROM node:16-bookworm as build-stage
+FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY ./ui/package*.json ./
+RUN apk add --no-cache autoconf automake build-base
 RUN npm install
 COPY ./ui .
 RUN npm run build
