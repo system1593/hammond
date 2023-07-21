@@ -9,7 +9,7 @@ RUN go mod download
 COPY ./server .
 RUN go build -o ./app ./main.go
 
-FROM node:18-alpine as build-stage
+FROM node:16-alpine as build-stage
 WORKDIR /app
 COPY ./ui/package*.json ./
 RUN apk add --no-cache autoconf automake build-base nasm libc6-compat python3 py3-pip make g++ libpng-dev zlib-dev pngquant
