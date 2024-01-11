@@ -1,5 +1,5 @@
 {
-  "quickentry": "Ingen hurtige indtastninger | Hurtig indtastning | Hurtige indtastninger",
+	"quickentry": "Ingen hurtige indtastninger | Hurtig indtastning | Hurtige indtastninger",
 	"statistics": "Statistik",
 	"thisweek": "Denne uge",
 	"thismonth": "Denne måned",
@@ -41,8 +41,8 @@
 	"distanceunit": "Afstandsenhed",
 	"dateformat": "Datoformat",
 	"createnow": "Opret nu",
-	"yourvehicles": "Dine køretøjer"
-    "menu": {
+	"yourvehicles": "Dine køretøjer",
+	"menu": {
 		"quickentries": "Hurtige indtastninger",
 		"logout": "Log ud",
 		"import": "Import",
@@ -79,7 +79,7 @@
 	"fuelsubtype": "Brændstoftype",
 	"fueltype": "Brændstoftype",
 	"quantity": "Mængde",
-	"gasstation": "Tankstation"
+	"gasstation": "Tankstation",
 	"fuel": {
 		"petrol": "Benzin",
 		"diesel": "Diesel",
@@ -152,7 +152,7 @@
 	"importgenerichintdata": "Data skal være i CSV-format.",
 	"here": "her",
 	"unprocessedquickentries": "Du har en hurtig indtastning, der skal behandles. | Du har {0} hurtige indtastninger, der venter på at blive behandlet.",
-	"show": "Vis"
+	"show": "Vis",
 	"loginerror": "Der opstod en fejl ved login til din konto. {msg}",
 	"showunprocessed": "Vis kun ubehandlede",
 	"unprocessed": "ubehandlede",
