@@ -65,7 +65,7 @@ export default {
     <b-navbar class="" spaced>
       <template v-slot:brand>
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          <h1 class="title" style="font-family:Arial Black">Hammond</h1>
+          <h1 class="title" style="font-family:Arial Black">Alex-test</h1>
         </b-navbar-item>
       </template>
       <template v-slot:end>
