@@ -54,6 +54,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        nomesito: '',
         distanceUnit: 1,
         currency: 'INR',
       }
