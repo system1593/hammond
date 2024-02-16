@@ -209,6 +209,9 @@ export default {
         <b-field :label="$t('init.fresh.yourpassword')">
           <b-input v-model="registerModel.password" type="password" required minlength="8" password-reveal></b-input>
         </b-field>
+          <b-field :label="$t('init.fresh.nomesito')">
+          <b-input v-model="registerModel.nomesito" required></b-input>
+        </b-field>
         <b-field :label="$t('currency')">
           <b-autocomplete
             v-model="registerModel.currency"
